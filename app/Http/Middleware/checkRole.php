@@ -19,9 +19,6 @@ class checkRole
         if ($role=='admin' && auth()->user()->role_id!=1){
             abort(403);
         }
-        // if ($role=='admin' && auth()->user()->role_id!=1){
-        //     abort(403);
-        // }
         return $next($request);
     }
 }
