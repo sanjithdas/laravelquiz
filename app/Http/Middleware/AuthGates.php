@@ -1,5 +1,7 @@
 <?php
 
+// Store all the permission details to seperate table permissions or
+
 namespace App\Http\Middleware;
 
 use App\Models\User;
@@ -85,11 +87,6 @@ class AuthGates
         Gate::define('users_result_show', function(User $user){
             return $user->role_id==1;
             });
-
-
-
-
-
 
         return $next($request);
     }
