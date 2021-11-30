@@ -1,0 +1,45 @@
+.flex-container-div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    font-size: 30px;
+  text-align: center;
+
+}
+
+.flex-box-left{
+     color: white;
+    margin: 10px;
+    flex: 70%;
+
+}
+
+.flex-box-right{
+    flex: 30%;
+    margin-right: 20px;
+    align-content: flex-start;
+}
+
+.head h4{
+    color: darkcyan;
+    border-bottom: 0.5rem dotted rgb(230, 172, 64);
+    border-width: 15px;
+    box-sizing: border-box;
+    width:500px;
+}
+
+
+.instruction-list{
+    padding: 30px;
+    list-style: decimal;
+    margin: 0;
+    text-align: left;
+    font-size: 1.5rem;
+    width: auto;
+
+}
+
+

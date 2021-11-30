@@ -1,0 +1,42 @@
+select ousr.id,ousr.email, ocat.id,ocat.name,
+count(DISTINCT a.question_id) + count(DISTINCT b.question_id)+  count(DISTINCT c.question_id) as total,
+count(DISTINCT a.question_id) as unattended_count,
+count(DISTINCT b.question_id) as failure_count,
+count(DISTINCT c.question_id) as success_count
+
+from
+results oexm
+inner JOIN users ousr ON oexm.user_id = ousr.id
+inner join questions oques ON oexm.question_id = oques.id
+inner join categories ocat ON oques.category_id = ocat.id
+left join
+(select
+DISTINCT exm.question_id, cat.id, exm.user_id
+ from results exm
+ inner join options opt on exm.question_id = opt.question_id and exm.reponse_id is null
+ inner join users usr ON exm.user_id = usr.id
+ inner join questions ques ON exm.question_id = ques.id
+inner join categories cat ON ques.category_id = cat.id
+ group by exm.question_id, cat.id, exm.user_id
+) a on a.question_id = oques.id  and oques.category_id = a.id and oexm.user_id=a.user_id
+
+left join
+(select  DISTINCT exm.question_id, cat.id, exm.user_id from results exm
+ inner join options opt on exm.question_id = opt.question_id and exm.reponse_id = opt.choice_id and opt.correct_choice <> 1
+ inner join users usr ON exm.user_id = usr.id
+ inner join questions ques ON exm.question_id = ques.id
+inner join categories cat ON ques.category_id = cat.id
+ group by exm.question_id, cat.id, exm.user_id
+) b on b.question_id = oques.id  and oques.category_id = b.id and oexm.user_id=b.user_id
+
+left join
+(select exm.question_id, cat.id, exm.user_id from results exm
+ inner join options opt on exm.question_id = opt.question_id and exm.reponse_id = opt.choice_id and  opt.correct_choice = 1
+ inner join users usr ON exm.user_id = usr.id
+ inner join questions ques ON exm.question_id = ques.id
+inner join categories cat ON ques.category_id = cat.id
+ group by exm.question_id, cat.id, exm.user_id
+) c on c.question_id = oques.id and oques.category_id = c.id and oexm.user_id=c.user_id
+
+
+group by ousr.id, ocat.id order by ousr.id asc

@@ -1,0 +1,16 @@
+
+{
+
+    "menu"  :[
+        {
+            "dashboard": "Dashboard",
+            "user_management": [{
+                "parent": "User Management",
+                "children": "Users"
+            }]
+        }
+    ]
+
+
+}
+
