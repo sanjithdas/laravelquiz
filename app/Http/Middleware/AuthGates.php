@@ -1,6 +1,6 @@
 <?php
 
-// Store all the permission details to seperate table permissions or
+// Store all the permission details to seperate table permissions or array ....
 
 namespace App\Http\Middleware;
 
