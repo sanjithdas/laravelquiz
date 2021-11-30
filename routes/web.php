@@ -19,17 +19,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/test', function () {
-    return view('admin.test');
-});
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/email/verify', function () {
-//     return view('auth.verify-email');
-// })->middleware('auth')->name('verification.verify');
+// User routes
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']] , function () {
    Route::get('/dashboard',[ExamDashboardController::class,'index'])->name('dashboard');
@@ -41,21 +36,20 @@ Route::group(['middleware' => ['auth:sanctum', 'PreventBackHistory']], function 
 
 });
 
-// Admin area
+// Admin routes
+
+//  dashboard routes 
 
 Route::prefix('admin')->namespace('Admin')->middleware(['auth:sanctum','role:admin','PreventBackHistory'])->group(function () {
     Route::get('/dashboard',function(){
         return view('admin.index');
     })->name('admin.dashboard');
 
-
-
 });
 
-
+ 
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Controllers\Admin', 'middleware' => ['auth:sanctum','role:admin','UserPermissions']], function () {
-
 
     //User massdestroy
     Route::delete('users/destroy', 'UserController@massDestroy')->name('users.massDestroy');
@@ -73,11 +67,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
     Route::delete('options/destroy', 'OptionsController@massDestroy')->name('options.massDestroy');
     Route::resource('options', 'OptionsController');
 
-
-
     //Results
-
-
     Route::post('results/user-result','ResultsController@getResults')->name('results.user_result');
     Route::get('results/incorrects/catid/user',  'ResultsController@getIncorrectAnswers')->name('results.incorrect');
     Route::get('results/unanswered/catid/user',  'ResultsController@getUnansweredQns')->name('results.unanswered');
@@ -85,9 +75,3 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
 
    });
 
-
-
-//    Route::group(['prefix' => 'admin', 'as' => 'admin.',   'middleware' => ['auth:sanctum','role:admin']], function () {
-
-//     Route::get('incorrects',[ResultsController::class,'getIncorrectResults'])->name('results.incorrect');
-//    });
