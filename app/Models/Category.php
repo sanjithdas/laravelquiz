@@ -24,15 +24,13 @@ class Category extends Model
         'updated_at',
         'deleted_at',
     ];
+    
+    //Accessor method
 
     public function getCategoryAttribute(){
         return "{$this->id} {$this->name}";
     }
 
-//     public function getFullNameAttribute()
-// {
-//     return "{$this->first_name} {$this->last_name}";
-// }
 
     public function categoryQuestions()
     {
