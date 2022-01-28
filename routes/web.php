@@ -75,3 +75,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
 
    });
 
+// courses COntroller
+Route::namespace('App\Http\Controllers\Admin')->group(function () {
+    Route::resource('courses', 'CoursesController');
+});
+
